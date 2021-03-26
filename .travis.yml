@@ -1,0 +1,11 @@
+language: node_js
+sudo: false
+notifications:
+  email: false
+node_js:
+  - "14" # LTS
+  - "12" # LTS
+  - "10" # maintenance
+cache:
+  directories:
+    - node_modules
