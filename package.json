@@ -1,7 +1,7 @@
 {
   "name": "hubot-nashville-electric",
   "description": "Get reported power outages in Nashville.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Stephen Yeargin <stephen@yearg.in>",
   "license": "MIT",
   "keywords": "hubot, hubot-scripts, nashville electric service, nes",
