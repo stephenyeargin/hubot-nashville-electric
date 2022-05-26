@@ -1,6 +1,6 @@
 # Nashville Electric Service for Hubot
 
-[![npm version](https://badge.fury.io/js/hubot-nashville-electric.svg)](http://badge.fury.io/js/hubot-nashville-electric) [![Build Status](https://app.travis-ci.com/stephenyeargin/hubot-nashville-electric.svg?branch=master)](https://app.travis-ci.com/stephenyeargin/hubot-nashville-electric)
+[![npm version](https://badge.fury.io/js/hubot-nashville-electric.svg)](http://badge.fury.io/js/hubot-nashville-electric) [![Node CI](https://github.com/stephenyeargin/hubot-nashville-electric/actions/workflows/nodejs.yml/badge.svg)](https://github.com/stephenyeargin/hubot-nashville-electric/actions/workflows/nodejs.yml)
 
 Get reported power outages in Nashville.
 
