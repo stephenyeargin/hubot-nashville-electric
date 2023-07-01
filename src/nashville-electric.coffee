@@ -40,26 +40,3 @@ module.exports = (robot) ->
   # NES Map
   robot.respond /nes (outage )?map/i, (msg) ->
     msg.send 'https://www.nespower.com/outages/'
-
-  # NES Twitter
-  robot.respond /nes twitter/i, (msg) ->
-    return unless process.env.HUBOT_TWITTER_CONSUMER_KEY && process.env.HUBOT_TWITTER_CONSUMER_SECRET
-    Twitter = require 'twitter'
-    twitter_client = new Twitter
-      consumer_key: process.env.HUBOT_TWITTER_CONSUMER_KEY
-      consumer_secret: process.env.HUBOT_TWITTER_CONSUMER_SECRET
-      access_token_key: process.env.HUBOT_TWITTER_ACCESS_TOKEN
-      access_token_secret: process.env.HUBOT_TWITTER_ACCESS_TOKEN_SECRET
-    params =
-      screen_name: 'NESpower'
-      tweet_mode: 'extended'
-      exclude_replies: true
-      exclude_retweets: true
-    twitter_client.get 'statuses/user_timeline', params, (error, tweets, response) ->
-      if error || tweets.length == 0
-        robot.logger.error error
-        msg.send "Failed to retrieve tweets"
-        return
-      robot.logger.debug tweets
-      tweet = tweets[0]
-      msg.send "<#{tweet.user.screen_name}> #{tweet.full_text} - #{tweet.created_at}"
