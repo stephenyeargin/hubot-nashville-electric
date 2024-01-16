@@ -45,6 +45,9 @@ module.exports = (robot) => {
           affectedCustomers += block.CustAffected;
         });
         const lastUpdate = result.UpdateDateTimeFormatted;
+        // example result.UpdateDateTime: \/Date(1616770502877)\/
+        // extract only the timestamp
+        const lastUpdateUnix = result.UpdateDateTime.replace(/\/Date\((\d+)\)\//, '$1');
         const fallback = `⚡️ NES reports ${affectedCustomers.toLocaleString('en-US')} customers without power as of ${lastUpdate}`;
         if (/slack/.test(robot.adapterName)) {
           msg.send({
@@ -57,7 +60,7 @@ module.exports = (robot) => {
                 author_name: 'Nashville Electric Service',
                 author_icon: 'https://upload.wikimedia.org/wikipedia/en/thumb/5/5c/Nashville_Electric_Service.svg/190px-Nashville_Electric_Service.svg.png?20210429001318',
                 author_link: 'https://www.nespower.com',
-                ts: dayjs(lastUpdate).unix(),
+                ts: dayjs(parseInt(lastUpdateUnix, 10)).unix(),
                 fields: [
                   { title: 'Affected Customers', value: affectedCustomers.toLocaleString('en-US'), short: true },
                   { title: 'Last Update', value: dayjs(lastUpdate).format('LLL'), short: true },

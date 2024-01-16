@@ -60,7 +60,7 @@ describe('nashville-electric slack', () => {
                     ],
                     title: 'Power Outages',
                     title_link: 'https://www.nespower.com/outages/',
-                    ts: 1616770500,
+                    ts: 1616770502,
                   },
                 ],
               },
