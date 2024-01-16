@@ -8,6 +8,11 @@
 //   hubot nes - Get count of customers affected by power outage
 //   hubot nes outage map - Get a link to the outage map
 
+const dayjs = require('dayjs');
+const localizedFormat = require('dayjs/plugin/localizedFormat')
+
+dayjs.extend(localizedFormat);
+
 module.exports = (robot) => {
   // Get outage counts
   robot.respond(/(power|power outages?|nes)$/i, (msg) => {
@@ -40,12 +45,51 @@ module.exports = (robot) => {
           affectedCustomers += block.CustAffected;
         });
         const lastUpdate = result.UpdateDateTimeFormatted;
-        msg.send(`⚡️ NES reports ${affectedCustomers.toLocaleString('en-US')} customers without power as of ${lastUpdate}`);
+        const fallback = `⚡️ NES reports ${affectedCustomers.toLocaleString('en-US')} customers without power as of ${lastUpdate}`;
+        if (/slack/.test(robot.adapterName)) {
+          msg.send({
+            attachments: [
+              {
+                fallback,
+                title: 'Power Outages',
+                title_link: 'https://www.nespower.com/outages/',
+                color: affectedCustomers > 0 ? 'danger' : '#256ab4',
+                author_name: 'Nashville Electric Service',
+                author_icon: 'https://upload.wikimedia.org/wikipedia/en/thumb/5/5c/Nashville_Electric_Service.svg/190px-Nashville_Electric_Service.svg.png?20210429001318',
+                author_link: 'https://www.nespower.com',
+                ts: dayjs(lastUpdate).unix(),
+                fields: [
+                  { title: 'Affected Customers', value: affectedCustomers.toLocaleString('en-US'), short: true },
+                  { title: 'Last Update', value: dayjs(lastUpdate).format('LLL'), short: true },
+                ],
+              },
+            ],
+          });
+          return;
+        }
+        msg.send(fallback);
       });
   });
 
   // NES Map
   robot.respond(/nes (outage )?map/i, (msg) => {
-    msg.send('https://www.nespower.com/outages/');
+    const fallback = 'https://www.nespower.com/outages/';
+    if (/slack/.test(robot.adapterName)) {
+      msg.send({
+        attachments: [
+          {
+            fallback,
+            title: 'NES Power Outage Map',
+            title_link: 'https://www.nespower.com/outages/',
+            color: '#256ab4',
+            author_name: 'Nashville Electric Service',
+            author_icon: 'https://upload.wikimedia.org/wikipedia/en/thumb/5/5c/Nashville_Electric_Service.svg/190px-Nashville_Electric_Service.svg.png?20210429001318',
+            author_link: 'https://www.nespower.com',
+          },
+        ],
+      });
+      return;
+    }
+    msg.send(fallback);
   });
 };
