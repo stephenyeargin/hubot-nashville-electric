@@ -9,7 +9,7 @@
 //   hubot nes outage map - Get a link to the outage map
 
 const dayjs = require('dayjs');
-const localizedFormat = require('dayjs/plugin/localizedFormat')
+const localizedFormat = require('dayjs/plugin/localizedFormat');
 
 dayjs.extend(localizedFormat);
 
@@ -37,7 +37,7 @@ module.exports = (robot) => {
         } catch (err2) {
           robot.logger.debug(body);
           robot.logger.error(err2);
-          msg.send(`Unable to retrieve outage information right now. (${body.substring(0, 100)})`);
+          msg.send('Unable to retrieve outage information right now. [Error parsing server response]');
           return;
         }
         let affectedCustomers = 0;
@@ -47,23 +47,37 @@ module.exports = (robot) => {
         const lastUpdate = result.UpdateDateTimeFormatted;
         // example result.UpdateDateTime: \/Date(1616770502877)\/
         // extract only the timestamp
+        const lastUpdateDisplay = dayjs(lastUpdate).format('LLLL');
         const lastUpdateUnix = result.UpdateDateTime.replace(/\/Date\((\d+)\)\//, '$1');
-        const fallback = `⚡️ NES reports ${affectedCustomers.toLocaleString('en-US')} customers without power as of ${lastUpdate}`;
+        const fallback = `⚡️ NES reports ${affectedCustomers.toLocaleString('en-US')} customers without power as of ${lastUpdateDisplay}`;
         if (/slack/.test(robot.adapterName)) {
+          let color;
+          switch (true) {
+            case affectedCustomers === 0:
+              color = 'good';
+              break;
+            case affectedCustomers < 100:
+              color = 'warning';
+              break;
+            default:
+              color = 'danger';
+              break;
+          }
+
           msg.send({
             attachments: [
               {
                 fallback,
                 title: 'Power Outages',
                 title_link: 'https://www.nespower.com/outages/',
-                color: affectedCustomers > 0 ? 'danger' : '#256ab4',
+                color,
                 author_name: 'Nashville Electric Service',
                 author_icon: 'https://upload.wikimedia.org/wikipedia/en/thumb/5/5c/Nashville_Electric_Service.svg/190px-Nashville_Electric_Service.svg.png?20210429001318',
                 author_link: 'https://www.nespower.com',
                 ts: dayjs(parseInt(lastUpdateUnix, 10)).unix(),
                 fields: [
                   { title: 'Affected Customers', value: affectedCustomers.toLocaleString('en-US'), short: true },
-                  { title: 'Last Update', value: dayjs(lastUpdate).format('LLL'), short: true },
+                  { title: 'Last Update', value: lastUpdateDisplay, short: true },
                 ],
               },
             ],

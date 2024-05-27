@@ -1,0 +1,38 @@
+{
+  "UpdateDateTime": "\/Date(1616770502877)\/",
+  "UpdateDateTimeFormatted": "03/26/2021, 09:55 AM",
+  "MapList": [
+    {
+      "OutageNumber": 2324271,
+      "CustAffected": 1,
+      "X1": -86.6410053497679,
+      "Y1": 36.3698109462471,
+      "CrewDeployed": false,
+      "StringOutageTime": "03/25/2021, 05:07 PM"
+    },
+    {
+      "OutageNumber": 2324343,
+      "CustAffected": 1,
+      "X1": -86.6410053497679,
+      "Y1": 36.3698109462471,
+      "CrewDeployed": false,
+      "StringOutageTime": "03/25/2021, 05:58 PM"
+    },
+    {
+      "OutageNumber": 2324750,
+      "CustAffected": 9,
+      "X1": -86.671479741164,
+      "Y1": 36.3586581359037,
+      "CrewDeployed": false,
+      "StringOutageTime": "03/26/2021, 08:17 AM"
+    },
+    {
+      "OutageNumber": 2324382,
+      "CustAffected": 1,
+      "X1": -86.8747462110963,
+      "Y1": 36.3134079952884,
+      "CrewDeployed": false,
+      "StringOutageTime": "03/25/2021, 06:51 PM"
+    }
+  ]
+}
