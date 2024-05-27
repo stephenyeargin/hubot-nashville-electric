@@ -47,9 +47,8 @@ module.exports = (robot) => {
         const lastUpdate = result.UpdateDateTimeFormatted;
         // example result.UpdateDateTime: \/Date(1616770502877)\/
         // extract only the timestamp
-        const lastUpdateDisplay = dayjs(lastUpdate).format('LLLL');
         const lastUpdateUnix = result.UpdateDateTime.replace(/\/Date\((\d+)\)\//, '$1');
-        const fallback = `⚡️ NES reports ${affectedCustomers.toLocaleString('en-US')} customers without power as of ${lastUpdateDisplay}`;
+        const fallback = `⚡️ NES reports ${affectedCustomers.toLocaleString('en-US')} customers without power as of ${dayjs(lastUpdate).format('LLLL')}`;
         if (/slack/.test(robot.adapterName)) {
           let color;
           switch (true) {
@@ -77,7 +76,7 @@ module.exports = (robot) => {
                 ts: dayjs(parseInt(lastUpdateUnix, 10)).unix(),
                 fields: [
                   { title: 'Affected Customers', value: affectedCustomers.toLocaleString('en-US'), short: true },
-                  { title: 'Last Update', value: lastUpdateDisplay, short: true },
+                  { title: 'Last Update', value: dayjs(lastUpdate).format('LLL'), short: true },
                 ],
               },
             ],

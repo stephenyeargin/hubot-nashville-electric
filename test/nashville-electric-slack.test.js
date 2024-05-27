@@ -55,7 +55,7 @@ describe('nashville-electric slack', () => {
                       {
                         short: true,
                         title: 'Last Update',
-                        value: 'Friday, March 26, 2021 9:55 AM',
+                        value: 'March 26, 2021 9:55 AM',
                       },
                     ],
                     title: 'Power Outages',
@@ -106,7 +106,7 @@ describe('nashville-electric slack', () => {
                       {
                         short: true,
                         title: 'Last Update',
-                        value: 'Friday, March 26, 2021 9:55 AM',
+                        value: 'March 26, 2021 9:55 AM',
                       },
                     ],
                     title: 'Power Outages',
@@ -157,7 +157,7 @@ describe('nashville-electric slack', () => {
                       {
                         short: true,
                         title: 'Last Update',
-                        value: 'Friday, March 26, 2021 9:55 AM',
+                        value: 'March 26, 2021 9:55 AM',
                       },
                     ],
                     title: 'Power Outages',
