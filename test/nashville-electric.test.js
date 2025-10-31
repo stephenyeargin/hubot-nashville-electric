@@ -14,6 +14,8 @@ describe('nashville-electric', () => {
   beforeEach(function () {
     nock.disableNetConnect();
     this.room = helper.createRoom();
+    // Mock logger.error to prevent console spam
+    this.room.robot.logger.error = () => {};
   });
 
   afterEach(function () {
