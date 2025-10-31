@@ -49,7 +49,7 @@ module.exports = (robot) => {
         // extract only the timestamp
         const lastUpdateUnix = result.UpdateDateTime.replace(/\/Date\((\d+)\)\//, '$1');
         const fallback = `⚡️ NES reports ${affectedCustomers.toLocaleString('en-US')} customers without power as of ${dayjs(lastUpdate).format('LLLL')}`;
-        if (/slack/.test(robot.adapterName)) {
+        if (/slack/i.test(robot.adapterName)) {
           let color;
           switch (true) {
             case affectedCustomers === 0:
@@ -90,7 +90,7 @@ module.exports = (robot) => {
   // NES Map
   robot.respond(/nes (outage )?map/i, (msg) => {
     const fallback = 'https://www.nespower.com/outages/';
-    if (/slack/.test(robot.adapterName)) {
+    if (/slack/i.test(robot.adapterName)) {
       msg.send({
         attachments: [
           {
