@@ -8,9 +8,13 @@ describe('nashville-electric slack', () => {
   it('gets current outage count', async () => {
     const ctx = await createTestBot({ adapterName: 'slack' });
     try {
-      nock('https://www.nespower.com')
-        .get('/outagemap/getall')
-        .replyWithFile(200, path.join(__dirname, 'fixtures/getall.json'));
+      nock('https://utilisocial.io')
+        .get('/datacapable/v2/p/NES/map/stats')
+        .replyWithFile(200, path.join(__dirname, 'fixtures/stats.json'));
+
+      nock('https://utilisocial.io')
+        .get('/datacapable/v2/p/NES/map/events')
+        .replyWithFile(200, path.join(__dirname, 'fixtures/events.json'));
 
       const response = await ctx.sendAndWaitForResponse('hubot nes');
       assert.deepEqual(response, {
@@ -47,9 +51,13 @@ describe('nashville-electric slack', () => {
   it('gets current outage count < 100', async () => {
     const ctx = await createTestBot({ adapterName: 'slack' });
     try {
-      nock('https://www.nespower.com')
-        .get('/outagemap/getall')
-        .replyWithFile(200, path.join(__dirname, 'fixtures/getall-less-than-100.json'));
+      nock('https://utilisocial.io')
+        .get('/datacapable/v2/p/NES/map/stats')
+        .replyWithFile(200, path.join(__dirname, 'fixtures/stats.json'));
+
+      nock('https://utilisocial.io')
+        .get('/datacapable/v2/p/NES/map/events')
+        .replyWithFile(200, path.join(__dirname, 'fixtures/events-less-than-100.json'));
 
       const response = await ctx.sendAndWaitForResponse('hubot nes');
       assert.deepEqual(response, {
@@ -86,9 +94,13 @@ describe('nashville-electric slack', () => {
   it('gets current outage count zero', async () => {
     const ctx = await createTestBot({ adapterName: 'slack' });
     try {
-      nock('https://www.nespower.com')
-        .get('/outagemap/getall')
-        .replyWithFile(200, path.join(__dirname, 'fixtures/getall-zero.json'));
+      nock('https://utilisocial.io')
+        .get('/datacapable/v2/p/NES/map/stats')
+        .replyWithFile(200, path.join(__dirname, 'fixtures/stats.json'));
+
+      nock('https://utilisocial.io')
+        .get('/datacapable/v2/p/NES/map/events')
+        .replyWithFile(200, path.join(__dirname, 'fixtures/events-zero.json'));
 
       const response = await ctx.sendAndWaitForResponse('hubot nes');
       assert.deepEqual(response, {
