@@ -1,7 +1,7 @@
 const { describe, it } = require('node:test');
 const assert = require('node:assert/strict');
 const path = require('path');
-const nock = require('nock');
+const nock = require('nock').default;
 const { createTestBot } = require('./common/TestBot');
 
 describe('nashville-electric slack', () => {
